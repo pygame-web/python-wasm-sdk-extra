@@ -35,14 +35,13 @@ jobs:
 
 
       - name: Build emsdk extra
-        working-directory: /opt/python-wasm-sdk
-        run: |
-          bash ./scripts/emsdk-extra.sh
-
-
-      - name: Build WASM extra index and packages
         run: |
           bash ./build.sh
+
+
+      - name: Package extra
+        run: |
+          bash ./pack.sh
 
 
       - name: publish web index
