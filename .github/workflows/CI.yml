@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+  release:
+    # this runs CI only when a release is created at first (and not when it is
+    # edited or published)
+    types: [created]
+
+
+jobs:
+  build:
+    name: Build wasm extra emsdk libraries
+    runs-on: ubuntu-22.04
+    env:
+      SDK_VERSION: 3.1.66.1bi
+      SDK_ARCHIVE: python3.12-wasm-sdk-Ubuntu-22.04.tar.lz4
+      SDKROOT: /opt/python-wasm-sdk
+      SYS_PYTHON: /usr/bin/python3
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install python-wasm-sdk for emsdk/wasi+prebuilts + extra builder scripts
+        working-directory: /
+        run: |
+          sudo apt-get install -y lz4 wget pv bash googletest libgtest-dev libsqlite3-dev sqlite3
+          sudo rm $(which node) $(which npm)
+          echo https://github.com/pygame-web/python-wasm-sdk/releases/download/$SDK_VERSION/$SDK_ARCHIVE
+          curl -sL --retry 5 https://github.com/pygame-web/python-wasm-sdk/releases/download/$SDK_VERSION/$SDK_ARCHIVE | tar xvP --use-compress-program=lz4 | pv -p -l -s 36000 >/dev/null
+          curl -sL --retry 5 https://github.com/pygame-web/python-wasm-sdk/releases/download/$SDK_VERSION/sdk-extra.tar.gz | tar xvPz
+
+
+      - name: Build emsdk extra
+        working-directory: /opt/python-wasm-sdk
+        run: |
+          bash ./scripts/emsdk-extra.sh
+
+
+      - name: Build WASM extra index and packages
+        run: |
+          bash ./build.sh
+
+
+      - name: publish web index
+        run: |
+          bash ./publish.sh
+
+      - name: Upload sdk-extra to Github Releases
+        if: github.event_name == 'release'
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: /tmp/sdk/*
+          file_glob: true
+          tag: ${{ github.ref }}
+
+
+      - name : "Upload to GitHub pages"
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        with:
+          branch: gh-pages
+          folder: /tmp/web
+
+
+
+
+      - name: run tests
+        run: |
+          bash ./tests.sh
+
