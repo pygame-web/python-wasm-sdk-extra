@@ -11,7 +11,7 @@ pushd /opt/python-wasm-sdk
     echo "Removing $(wc -l sdk.base) files belonging to SDK"
     for sdkfile in $(cat sdk.base)
     do
-        rm $f
+        rm $sdkfile
     done
 popd
 
