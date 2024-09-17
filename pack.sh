@@ -19,8 +19,16 @@ echo "Making sdk-extra $TAG tarball" 1>&2
 
 
 pushd /
-mkdir -p /tmp/sdk
-tar -cpPR \
+    mkdir -p /tmp/sdk
+
+    cat > ${SDKROOT}/extra.installed <<END
+EXTRA_PYBUILD=${PYBUILD}
+EXTRA_TAG=
+EXTRA_CIVER=${CIVER}
+END
+
+    tar -cpPR \
+    ${SDKROOT}/extra.installed
     ${SDKROOT}/config \
     ${SDKROOT}/python3-was? \
     ${SDKROOT}/wasm32-*-shell.sh \
@@ -36,5 +44,5 @@ tar -cpPR \
     du -hs /tmp/sdk/*
 
     rm /tmp/sdk/python${PYBUILD}-${TAG}-sdk-extra-${CIVER}.tar
-echo "done"  1>&2
+    echo "done"  1>&2
 popd
