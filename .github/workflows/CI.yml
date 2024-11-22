@@ -14,9 +14,9 @@ jobs:
     name: Build wasm extra emsdk libraries
     runs-on: ubuntu-22.04
     env:
-      SDK_VERSION: 3.1.71.0bi
-      PYBUILD: 3.12
-      SDK_ARCHIVE: python3.12-wasm-sdk-Ubuntu-22.04.tar.lz4
+      SDK_VERSION: 3.1.72.0bi
+      PYBUILD: 3.13
+      SDK_ARCHIVE: python3.13-wasm-sdk-Ubuntu-22.04.tar.lz4
       SDKROOT: /opt/python-wasm-sdk
       SYS_PYTHON: /usr/bin/python3
 
