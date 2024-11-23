@@ -14,7 +14,7 @@ then
 #!/bin/bash
 if echo $*|grep -q version$
 then
-	echo "$(cat ${SDKROOT}/emsdk/upstream/bin/wasm-opt)"
+	echo "$(cat ${SDKROOT}/wasm-opt.version)"
 else
 	# echo "\$@" >> /tmp/wasm.opt
     exit 0
