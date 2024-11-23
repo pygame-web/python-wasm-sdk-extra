@@ -7,16 +7,12 @@ export CIVER=${CIVER:-$DISTRIB}
 
 TAG=emsdk
 
-pushd ${SDKROOOT}
+pushd ${SDKROOT}
     echo "Removing $(wc -l sdk.base) files belonging to SDK"
-    for sdkfile in $(cat sdk.base)
-    do
-        rm $sdkfile
-    done
+    while IFS= read -r file ; do rm -- "$file" ; done < sdk.base
 popd
 
 echo "Making sdk-extra $TAG tarball" 1>&2
-
 
 pushd /
     mkdir -p /tmp/sdk
