@@ -12,12 +12,12 @@ pushd ${SDKROOT}
     while IFS= read -r file ; do rm -- "$file" ; done < sdk.base
 popd
 
-echo "Making sdk-extra $TAG tarball" 1>&2
+echo "Making sdk-extra $TAG tarball" 
+
 
 pushd /
     mkdir -p /tmp/sdk
-
-    cat > ${SDKROOT}/extra.installed <<END
+    cat > ${SDKROOT}/extra.installed << END
 EXTRA_PYBUILD=${PYBUILD}
 EXTRA_TAG=
 EXTRA_CIVER=${CIVER}
