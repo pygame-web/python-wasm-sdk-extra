@@ -7,7 +7,7 @@ export CIVER=${CIVER:-$DISTRIB}
 
 TAG=emsdk
 
-pushd /opt/python-wasm-sdk
+pushd ${SDKROOOT}
     echo "Removing $(wc -l sdk.base) files belonging to SDK"
     for sdkfile in $(cat sdk.base)
     do
@@ -35,6 +35,8 @@ END
     ${SDKROOT}/*sdk \
     ${SDKROOT}/scripts/*sdk-fetch.sh \
     ${SDKROOT}/devices/* \
+    ${SDKROOT}/lang \
+    ${SDKROOT}/native \
     ${SDKROOT}/prebuilt/* \
      > /tmp/sdk/python${PYBUILD}-${TAG}-sdk-extra-${CIVER}.tar
 
