@@ -25,14 +25,11 @@ END
 
     tar -cpPR \
     ${SDKROOT}/extra.installed
-    ${SDKROOT}/config \
     ${SDKROOT}/python3-was? \
     ${SDKROOT}/wasm32-*-shell.sh \
     ${SDKROOT}/*sdk \
     ${SDKROOT}/scripts/*sdk-fetch.sh \
     ${SDKROOT}/devices/* \
-    ${SDKROOT}/lang \
-    ${SDKROOT}/native \
     ${SDKROOT}/prebuilt/* \
      > /tmp/sdk/python${PYBUILD}-${TAG}-sdk-extra-${CIVER}.tar
 
