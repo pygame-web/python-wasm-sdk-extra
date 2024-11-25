@@ -24,7 +24,7 @@ EXTRA_CIVER=${CIVER}
 END
 
     tar -cpPR \
-    ${SDKROOT}/extra.installed
+    ${SDKROOT}/extra.installed \
     ${SDKROOT}/python3-was? \
     ${SDKROOT}/wasm32-*-shell.sh \
     ${SDKROOT}/*sdk \
