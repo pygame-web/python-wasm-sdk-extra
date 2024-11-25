@@ -22,6 +22,7 @@ fi
 END
         chmod +x ${SDKROOT}/emsdk/upstream/bin/wasm-opt
     fi
+    rm sources.extra/1000-glib.sh
     . scripts/emsdk-extra.sh
 fi
 
